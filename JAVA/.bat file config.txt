@@ -1,0 +1,53 @@
+﻿.bat File Thinking
+
+1. Basic rule as follow:
+    a. FOR %%variable IN (set) DO command [command-parameters] 
+       %%variable　　　　  指定一个单一字母可替换的参数
+    (set)　　　　　　    指定一个或一组文件。可以使用通配符
+    command　　　　　 指定对每个文件执行的命令
+    command-parameters 为特定命令指定参数或命令行开关
+    example:
+       for %%c in (*.bat *.txt) do type %%c     显示当前目录下所有以bat和txt为扩展名的文件的内容.
+
+  b. goto
+       @echo off
+        if exist C:\AUTOEXEC.BAT goto _COPY 
+        goto _DONE 
+        :_COPY 
+        copy C:\AUTOEXEC.BAT D:\ 
+        :_DONE 
+  
+        Attention： 
+     标号前是ASCII字符的冒号":"，冒号与标号之间不能有空格;
+         标号的命名规则与文件名的命名规则相同;
+         DOS支持最长八位字符的标号，当无法区别两个标号时，将跳转至最近的一个标号.
+
+2. Basic command to input batch file information into a.txt, then call callback.bat file as follow:
+   test.bat:
+   @echo 
+   dir C:\Users\zhanghe10\Desktop\batch\*.* > a.txt
+   call C:\Users\zhanghe10\Desktop\batch\callback.bat
+   echo hello
+   pause
+
+   callback.bat:
+   @echo 
+   if exist a.txt type a.txt
+   if not exist a.txt echo a.txt does not exist.
+
+3. Run a java tool that includes class files, .bat file can be set as follow:
+   @echo off
+   set JAVA_OPTS=-Xms256m -Xmx256m -XX:PermSize=64m -XX:MaxPermSize=128m
+   SetLocal EnableDelayedExpansion 
+   @echo filepath:"%~dp0"
+   FOR %%i IN ("lib\*.jar") DO (SET CLASSPATH=%%~fsi;!CLASSPATH!)
+   start ..\bin\apps\jdk\jre\bin\javaw %JAVA_OPTS% -cp "./;%CLASSPATH%" com.hikvision.toolbox.ipportchange.ui.IPChangeMain
+   EndLocal
+
+4. A command to stop and delete each services in server as follow:
+   net stop DC-DAG
+   sc delete DC-DAG
+   net stop ECG
+   sc delete ECG
+   net stop eds
+   sc delete eds
