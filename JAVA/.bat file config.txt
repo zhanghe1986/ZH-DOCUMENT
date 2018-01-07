@@ -1,6 +1,4 @@
-﻿.bat File Thinking
-
-1. Basic rule as follow:
+﻿1. Basic rule as follow:
     a. FOR %%variable IN (set) DO command [command-parameters] 
        %%variable　　　　  指定一个单一字母可替换的参数
     (set)　　　　　　    指定一个或一组文件。可以使用通配符
