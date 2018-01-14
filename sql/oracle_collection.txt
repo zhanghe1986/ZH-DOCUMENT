@@ -1,0 +1,17 @@
+﻿1. 以500个元素为单位循环查下写法
+<select id="testSelectInQuery" parameterType="java.util.Map" resultMap="testEntity" >
+   <include refid="mainSql"/>
+   where (
+   c_index_code in
+   <foreach item="indexcode" index="index" collection="indexcodes" open="(" close=")">
+      <if test="index != 0">
+         <choose>
+            <when test="index % 500 == 0">) or c_index_code in (</when>
+            <otherwise>,</otherwise>
+         </choose>
+      </if>               
+      #{indexcode}         
+   </foreach> 
+   )
+   and ....
+</select>
