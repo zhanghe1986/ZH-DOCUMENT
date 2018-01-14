@@ -39,7 +39,7 @@
    SetLocal EnableDelayedExpansion 
    @echo filepath:"%~dp0"
    FOR %%i IN ("lib\*.jar") DO (SET CLASSPATH=%%~fsi;!CLASSPATH!)
-   start ..\bin\apps\jdk\jre\bin\javaw %JAVA_OPTS% -cp "./;%CLASSPATH%" com.hikvision.toolbox.ipportchange.ui.IPChangeMain
+   start ..\bin\apps\jdk\jre\bin\javaw %JAVA_OPTS% -cp "./;%CLASSPATH%" com.toolbox.ipportchange.ui.IPChangeMain
    EndLocal
 
 4. A command to stop and delete each services in server as follow:
