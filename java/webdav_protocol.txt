@@ -1,0 +1,37 @@
+﻿WebDav 协议配置支持其他服务器上传文件至主服务器apache下
+
+1. apache组件confg/httpd.conf配置
+配置定义主服务器apache对其他服务器开放的根路径：
+DocumentRoot "D:/iVMS_Platform/bin/apps/apache/htdocs"
+<Directory "D:/iVMS_Platform/bin/apps/apache/htdocs">
+
+webdav协议开放配置：
+LoadModule dav_module modules/mod_dav.so
+LoadModule dav_fs_module modules/mod_dav_fs.so
+LoadModule dav_lock_module modules/mod_dav_lock.so
+Include conf/extra/httpd-dav.conf
+
+ProxyPass /uploads !
+
+2. extra/httpd-dav配置
+DavLockDB "D:/iVMS_Platform/bin/apps/apache/DavLock"
+
+Alias /uploads "D:/iVMS_Platform/bin/apps/apache/htdocs/static/uploads"
+
+<Directory "D:/iVMS_Platform/bin/apps/apache/htdocs/static/uploads">
+    Dav On
+
+    #AuthType Digest
+    #AuthName DAV-upload
+    # You can use the htdigest program to create the password database:
+    #   htdigest -c "c:/Apache24/user.passwd" DAV-upload admin
+    #AuthUserFile "c:/Apache24/user.passwd"
+    #AuthDigestProvider file
+
+    # Allow universal read-access, but writes are restricted
+    # to the admin user.
+    #<RequireAny>
+    #    Require method GET POST OPTIONS
+    #    Require user admin
+    #</RequireAny>
+</Directory>
